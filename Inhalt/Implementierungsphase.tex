@@ -1,0 +1,138 @@
+% !TEX root = ../Projektdokumentation.tex
+\section{Implementierungsphase} 
+\label{sec:Implementierungsphase}
+
+\subsection{PostgreSQL-Datenbankmodellierung und -Erstellung}
+\label{sec:Datenbankmodellierung}
+
+Die PostgreSQL-Datenbank umfasst eine einzige Tabelle namens \textit{bc\_tracking}. 
+Aufgrund der einfachen Projektanforderungen war ein komplexes ER-Modell nicht nötig. 
+Die Datenbank speichert Tracking-Informationen von Zeitfracht und BC.
+
+Tabelle~\ref{tab:bcTracking} Die Struktur der Tabelle \textit{bc\_tracking} ist wie folgt:
+\tabelle{\textit{bc\_tracking}}{tab:bcTracking}{bcTracking}\\
+
+\begin{figure}[htb]
+    \centering
+    \includegraphicsKeepAspectRatio{sql_create_db.png}{0.5}
+    \caption{Skript zur Erstellung der Datenbank}
+    \label{fig:DatenbankBCTracking}
+\end{figure}
+
+\clearpage
+
+\subsection{5.2	Deployment auf dem Hetzner-Server}
+\label{sec:Hetzner-Server}
+
+Die PostgreSQL-Datenbank wurde auf einem Hetzner-Server installiert, um eine zuverlässige und performante 
+Umgebung für die Anwendung bereitzustellen. Die Verwaltung der Datenbank erfolgt über DBeaver, das sowohl 
+lokale als auch entfernte Datenbankverbindungen unterstützt.
+
+\subsection{Testdaten und Verifizierung des Datenbankzugriffs}
+\label{sec:VerifizierungTestdaten}
+
+Um die korrekte Funktion der Datenbank und der Anwendungen zu verifizieren, wurden Test-daten verwendet. 
+Diese Testdaten wurden in die Tabelle \textit{bc\_tracking} eingefügt und die An-wendungen darauf ausgeführt, 
+um sicherzustellen, dass die Daten korrekt verarbeitet und die gewünschten Aktionen, wie das Senden von E-Mails, 
+ausgeführt werden. Screenshots der Anwendung in der Entwicklungsphase mit Dummy-Daten befinden sich im Anhang A3 Abbildung 7
+
+\subsection{Implementierung der Geschäftslogik}
+\label{sec:Geschaeftslogik}
+
+Die Geschäftslogik wurde in Python implementiert und besteht aus zwei Hauptskripten: trackings.py und \textit{bc\_db.py}. 
+Das Skript trackings.py ist verantwortlich für das Einlesen von CSV-Dateien mit Tracking-Daten von Zeitfracht und das 
+Speichern dieser Daten in der PostgreSQL-Datenbank. Das Skript führt folgende Schritte aus:
+\begin{itemize}
+    \item Einlesen aller CSV-Dateien aus einem Quellverzeichnis.
+    \item Validierung der Dateiinhalte, insbesondere der notwendigen Spalten.
+    \item Verarbeitung jeder Zeile und Einfügen der Daten in die Tabelle \textit{bc\_tracking}.
+    \item Bei erfolgreicher Verarbeitung wird die CSV-Datei aus dem Quellverzeichnis gelöscht.
+\end{itemize}
+
+
+Ein wichtiger Bestandteil ist die Validierung der Daten. Hier wird sichergestellt, dass nur gültige
+Statuscodes verarbeitet werden:	
+
+\begin{figure}[htb]
+    \centering
+    \includegraphicsKeepAspectRatio{validate_row.png}{1}
+    \caption{Validierung der Statuscodes}
+    \label{fig:validateRow}
+\end{figure}
+
+Das Skript \textit{bc\_db.py} kümmert sich um die Verarbeitung der in der Datenbank gespeicherten Trackingdaten und 
+interagiert mit der Business Central API. 
+Die Hauptaufgaben sind:
+
+\begin{itemize}
+    \item Überprüfen, ob bestimmte Tracking-Nummern länger als eine definierte Anzahl von Tagen in einem bestimmten Status verweilen.
+    \item Senden von Benachrichtigungs-E-Mails, falls diese Bedingungen erfüllt sind
+    \item Senden von Benachrichtigungs-E-Mails, falls Fehler auftreten
+    \item Aktualisieren von Datensätzen in Business Central über die API.
+\end{itemize}
+
+
+Beispielsweise wird geprüft, ob Sendungen mit Statuscode 30 länger als 7 Tage nicht zugestellt wurden:
+
+\begin{figure}[htb]
+    \centering
+    \includegraphicsKeepAspectRatio{sql_view.png}{1}
+    \caption{Prüfung von Sendungen im Status 30}
+    \label{fig:viewStatus}
+\end{figure}
+
+
+Sowohl \textit{trackings.py} als auch \textit{bc\_db.py} nutzen verschiedene Integrationen, um die Funktionalität zu erweitern. 
+Zum Beispiel wird das Decorator-Pattern verwendet, um Integrationen einzubinden:
+
+\begin{figure}[htb]
+    \centering
+    \includegraphicsKeepAspectRatio{dekorator_pattern.png}{0.8}
+    \caption{Verwendung von Integrationen}
+    \label{fig:Integrationen}
+\end{figure}
+
+
+Dieses Muster ermöglicht eine modulare und erweiterbare Architektur der Anwendung.
+
+\clearpage
+
+Des Weiteren werden Ausnahmen und Fehler sorgfältig behandelt, um die Stabilität der An-wendung zu gewährleisten. 
+Zum Beispiel wird beim Aktualisieren von Daten in BC auf mögliche API-Fehler reagiert:
+
+\begin{figure}[htb]
+    \centering
+    \includegraphicsKeepAspectRatio{update_data.png}{0.8}
+    \caption{Fehlerbehandlung bei API-Aufrufen}
+    \label{fig:viewAPI}
+\end{figure}
+
+Die Klasse \textit{Zf\_bc\_tracking} in \textit{rackings.py} implementiert die Logik zum Einlesen und Verarbeiten der Trackingdaten 
+von Zeitfracht. Zusammenfassend wurde die Geschäftslogik unter Verwendung von Python und verschiedenen Bibliotheken wie SQLAlchemy 
+für den Datenbankzugriff, Logging für die Protokollierung und benutzerdefinierten Integrationen für die Anbindung externer Systeme realisiert.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+% !TEX root = ../Projektdokumentation.tex
+\section{Dokumentation}
+\label{sec:Dokumentation}
+
+
+\subsection{Zielgruppe der Entwicklerdokumentation}
+\label{sec:ZielgruppeDoku}
+
+Die Dokumentation richtet sich an administratives Personal der VONMÄHLEN GmbH. 
+Der Umgang mit Apache Airflow und PostgreSQL ist diesem Personenkreis geläufig. 
+Python wird als unternehmensübliche Programmiersprache genutzt. Die Dokumentation ist 
+sowohl im Markdown-Format im GIT-Repository (\textit{README.md}) als auch im internen Unternehmens-Wiki verfügbar.
+
+\subsection{Inhalt der Entwicklerdokumentation}
+\label{sec:Entwicklerdokumentation}
+
+Die Entwicklerdokumentation umfasst:
+\begin{itemize}
+    \item Integration in Apache Airflow: Anleitung zur Einbindung der Software in die bestehende Airflow-Instanz.
+    \item Funktionsweise der Software: Detaillierte Beschreibung der Anwendung und ihrer Hauptfunktionen.
+    \item Fehlermeldungen und Maßnahmen: Übersicht der möglichen Fehlermeldungen und empfohlene Vorgehensweisen zur Fehlerbehebung.
+    \item Erweiterungsmöglichkeiten: Anleitung zur Anpassung der Software bei Änderungen der API des Versanddienstleisters, 
+    wie z.B. neue Status-Codes oder geänderte CSV-Schemata.
+\end{itemize}
+
+\subsection{Code Dokumentation}
+\label{sec:CodeDokumentation}
+
+Der Programmcode enthält umfassende Python-Docstrings, die die Funktionen und Klassen erläutern. 
+Diese richten sich an Personen, die den erstellten Programmcode anpassen oder besser verstehen möchten. 
+Ergänzend dazu finden sich im Anhang:
+\begin{itemize}
+    \item A9: Entwicklerdokumentation (Auszug Wiki)
+    \item A10: Entwicklerdokumentation (Auszug Git)
+    \item A6: Programmcode (Auszug \textit{bc\_db.py})
+    \item A7: Programmcode (Auszug \textit{trackings.py})
+\end{itemize}

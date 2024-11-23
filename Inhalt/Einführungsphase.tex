@@ -1,0 +1,46 @@
+\section{Einführungsphase}
+\label{sec:Einfuehrungsphase}
+In der Einführungsphase wurde das System in die produktive Umgebung überführt, 
+um den automatisierten Ablauf der täglichen Prüfungen von Warensendungen sicherzustellen. 
+Die folgenden Schritte wurden im Rahmen dieser Phase durchgeführt:
+
+\subsection{Einrichtung neuer Docker-Container auf dem Hetzner-Server}
+\label{sec:Docker}
+Auf dem Hetzner-Server wurden zwei neue Docker-Container erstellt, um eine isolierte und skalierbare 
+Umgebung für die Anwendung bereitzustellen. Die Verwendung von Docker ermöglicht eine effiziente 
+Verwaltung und einfache Wartung der benötigten Services sowie eine klare Trennung zwischen den verschiedenen 
+Komponenten des Systems.
+
+\subsection{Installation und Konfiguration von Apache Airflow}
+\label{sec:ApacheAirflow}
+In einem der Docker-Container wurde Apache Airflow installiert und konfiguriert. Apache Airflow dient hier als 
+Workflow-Management-System, das die zeitgesteuerte und automatisierte Ausführung von Aufgaben sicherstellt. 
+Im Airflow-Container wurden zwei zentrale Python-Skripte \textit{trackings.py} und \textit{bc\_db.py} integriert, die täglich als 
+sogenannte ”DAGs” (Direc-tedAcyclicGraphs) ausgeführt werden.
+Durch die zeitgesteuerte Ausführung in Airflow werden diese Skripte täglich zu festgelegten Zeiten gestartet und 
+gewährleisten somit eine kontinuierliche Aktualisierung der Trackingdaten.
+
+
+\subsection{Starten und Verwalten des PostgreSQL-Datenbankservers}
+\label{sec:PostgreSQLDB}
+Im zweiten Docker-Container wurde eine PostgreSQL-Datenbank eingerichtet, die als zentrales Speichermedium für die 
+erfassten Trackingdaten fungiert. Diese Datenbank speichert die täglichen Updates der Trackingnummern und ermöglicht 
+den Zugriff auf aktuelle sowie historische Daten für die weiteren Prüfungen und Analysen. Die PostgreSQL-Datenbank 
+ist darauf ausgelegt, den Anforderungen des produktiven Betriebs standzuhalten, einschließlich regelmäßiger Backups 
+und Optimierungseinstellungen zur Sicherstellung einer stabilen Performance
+
+\subsection{Verbindung zwischen den Containern}
+\label{sec:Verbindung zwischen den Containern}
+Die Docker-Container für Airflow und PostgreSQL sind so konfiguriert, dass sie nahtlos miteinander kommunizieren können. 
+Apache Airflow kann so problemlos auf die PostgreSQL-Datenbank zugreifen, um die Datenbankabfragen und -speicherungen 
+auszuführen, die für das tägliche Tracking der Warensendungen erforderlich sind. Die Netzwerkverbindung zwischen den 
+Containern sorgt dafür, dass die Daten sicher und effizient verarbeitet werden können.
+
+\subsection{Überwachung und Sicherstellung des reibungslosen Betriebs}
+\label{sec:UeberwachungBetrieb}
+Nach der Einrichtung und dem Start der Container wurde eine Überwachung eingerichtet, um die Ausführung der Skripte und die 
+Verfügbarkeit der Datenbank kontinuierlich zu prüfen. Dies umfasst das Logging und Monitoring der Airflow-Tasks sowie 
+der PostgreSQL-Datenbank, um potenzielle Probleme frühzeitig zu erkennen und sicherzustellen, dass alle Prozesse reibungslos ablaufen.
+Die Einführungsphase stellt somit die Grundlage für den automatisierten Betrieb des Systems im Live-Betrieb dar. 
+Durch die Containerisierung auf dem Hetzner-Server und die tägliche Ausführung der Python-Skripte in Airflow ist 
+das System bereit, täglich die aktuellen Trackingdaten abzurufen, zu speichern und mit den \ac{ERP}-Daten abzugleichen.

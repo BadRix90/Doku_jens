@@ -12,8 +12,7 @@ eine nahtlose Integration und die zuverlässige Ausführung wieder-kehrender Auf
 erfolgt über eine abgesicherte \ac{API}-Schnittstelle, während der Datentransfer über einen SFTP-Server abgewickelt wird, 
 der die Trackingdaten vom externen Dienstleister sicher aufnimmt. Mit dieser Infrastruktur wird eine optimale Sicherheit 
 und Performance erreicht, und gleichzeitig können die Anforderungen an eine hohe Verfügbarkeit und Skalierbarkeit erfüllt 
-werden. Architekturdesign Beschreibung und Begründung der gewählten Anwendungsarchitektur \ac{MVC}. Ggfs. Bewertung und 
-Auswahl von verwendeten Frameworks sowie ggfs. eine kurze Einführung in die Funktionsweise des verwendeten Frameworks.
+werden.
 
 \subsection{Architekturdesign}
 \label{sec:Architekturdesign}
@@ -21,3 +20,13 @@ Python in Verbindung mit Apache Airflow wurde aufgrund der einfachen Integration
 Python ermöglicht schnelle Entwicklung, während Airflow die Orchestrierung und Überwachung der Datenpipelines übernimmt. Ideal für 
 die automatisierte Verarbeitung der Tracking-Daten.
 
+Zusätzlich wurde Docker als Plattform gewählt, um eine isolierte, portable und skalierbare Umgebung für die Anendungen bereitzustellen. 
+Docker erleichtert die Verwaltung der eingesetzten Dienste wie PostgreSQL und Apache Airflow und ermöglicht eine schnelle Bereitstellung 
+und Wiederherstellung der Anwendung. Die Contawinerisierung stellt sicher, dass die Anwendung unabhängig von der Umgebung läuft und 
+problemlos erweitert werden kann.
+
+PostgreSQL wurde als Datenbankmanagementsystem ausgewählt, da es eine leistungsstarke, zuverlässige und kostenlose Open-Source-Lösung darstellt. 
+Es bietet umfangreiche Funktionen wie Transaktionssicherheit, Skalierbarkeit und eine hohe Leistung bei der Verarbeitung großer Datenmengen. 
+Die Fähigkeit von PostgreSQL, komplexe Abfragen effizient zu verarbeiten, war entscheidend für die Auswahl, da die Tracking-Daten sowohl 
+regelmäßig aktualisiert als auch konsolidiert werden müssen. Zusammen mit Docker ergibt sich eine robuste, skalierbare und leicht wartbare 
+Architektur, die den Anforderungen des Projekts optimal entspricht.

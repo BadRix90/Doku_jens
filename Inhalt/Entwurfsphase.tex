@@ -1,0 +1,32 @@
+% !TEX root = ../Projektdokumentation.tex
+\section{Entwurfsphase} 
+\label{sec:Entwurfsphase}
+
+\subsection{Zielplattform}
+\label{sec:Zielplattform} 
+Die Zielplattform für dieses Projekt ist die IT-Infrastruktur der VONMÄHLEN GmbH, die auf ein internes Netzwerk 
+ausgerichtet ist. Kernkomponenten des Projekts, darunter die PostgreSQL-Datenbank und das \ac{ERP}-System BC, sind in 
+die bestehende Serverarchitektur integriert. Zur Automatisierung von Aufgaben wie dem täglichen Datenabgleich und 
+der Aktualisierung der Trackinginformationen werden Docker und Apache Airflow eingesetzt. Diese Werkzeuge ermöglichen 
+eine nahtlose Integration und die zuverlässige Ausführung wiederkehrender Aufgaben. Der Zugriff auf Business Central 
+erfolgt über eine abgesicherte \ac{API}-Schnittstelle, während der Datentransfer über einen SFTP-Server abgewickelt wird, 
+der die Trackingdaten vom externen Dienstleister sicher aufnimmt. Mit dieser Infrastruktur wird eine optimale Sicherheit 
+und Performance erreicht, und gleichzeitig können die Anforderungen an eine hohe Verfügbarkeit und Skalierbarkeit erfüllt 
+werden.
+
+\subsection{Architekturdesign}
+\label{sec:Architekturdesign}
+Python in Verbindung mit Apache Airflow wurde aufgrund der einfachen Integration und Technologiengleichheit im Unternehmen gewählt. 
+Python ermöglicht schnelle Entwicklung, während Airflow die Orchestrierung und Überwachung der Datenpipelines übernimmt. Ideal für 
+die automatisierte Verarbeitung der Tracking-Daten.
+
+Zusätzlich wurde Docker als Plattform gewählt, um eine isolierte, portable und skalierbare Umgebung für die Anwendungen bereitzustellen. 
+Docker erleichtert die Verwaltung der eingesetzten Dienste wie PostgreSQL und Apache Airflow und ermöglicht eine schnelle Bereitstellung 
+und Wiederherstellung der Anwendung. Die Containerisierung stellt sicher, dass die Anwendung unabhängig von der Umgebung läuft und 
+problemlos erweitert werden kann.
+
+PostgreSQL wurde als Datenbankmanagementsystem ausgewählt, da es eine leistungsstarke, zuverlässige und kostenlose Open-Source-Lösung darstellt. 
+Es bietet umfangreiche Funktionen wie Transaktionssicherheit, Skalierbarkeit und eine hohe Leistung bei der Verarbeitung großer Datenmengen. 
+Die Fähigkeit von PostgreSQL, komplexe Abfragen effizient zu verarbeiten, war entscheidend für die Auswahl, da die Tracking-Daten sowohl 
+regelmäßig aktualisiert als auch konsolidiert werden müssen. Zusammen mit Docker ergibt sich eine robuste, skalierbare und leicht wartbare 
+Architektur, die den Anforderungen des Projekts optimal entspricht.

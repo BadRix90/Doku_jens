@@ -1,0 +1,93 @@
+% !TEX root = ../Projektdokumentation.tex
+\section{Analysephase} 
+\label{sec:Analysephase}
+
+\subsection{Ist-Analyse} 
+\label{sec:IstAnalyse}
+Derzeit werden täglich alle Warensendungen manuell geprüft, indem Lieferungen mit Trackingnummern 
+herausgefiltert und im Onlineportal des externen Versanddienstleisters überprüft werden. 
+Mitarbeiter in der Abteilung \ac{SCM} durchforsten Verkaufsaufträge nach 
+Trackingnummern und prüfen im Versandportal den aktuellen Status der Sendungen. Der Fokus liegt 
+hierbei darauf, Unregelmäßigkeiten wie Verzögerungen oder Fehlzustellungen zu identifizieren. 
+Bei auffälligen Zuständen wird die zuständige Abteilung informiert, um die erforderlichen Maßnahmen einzuleiten.
+
+\subsection{Wirtschaftlichkeitsanalyse}
+\label{sec:Wirtschaftlichkeitsanalyse}
+Die Wirtschaftlichkeit des Projekts ließ sich unkompliziert anhand der eingesparten Arbeitszeit der SCM-Mitarbeiter berechnen, 
+da diese durch die Automatisierung des Prüfungsprozesses deutlich reduziert wird.
+
+
+\subsection{Kostenanalyse}
+\label{sec:Kostenanalyse}
+Die Kosten für die Implementierung des Systems umfassen zwei Hauptkategorien: 
+Initiale Implementierungskosten und laufende Betriebskosten.
+
+\subsubsection{Einmalige Implementierungskosten}
+\label{sec:Implementierungskosten}
+
+Diese Kosten fallen nur einmal an und umfassen die Entwicklung des Systems, 
+die Anschaffung notwendiger Software sowie die Einrichtung der Infrastruktur.
+
+	\textbf{Entwicklungskosten (inklusive Planung, Design und Implementierung)}:
+    \begin{itemize}
+        \item Auszubildender: 80 Stunden a 7 €/Stunde = 560 €
+        \item Entwickler-Support: 10 Stunden a 22 €/Stunde = 220 €
+        \item Fachabteilung SCM: 2 Stunden a 30 €/Stunde
+    \end{itemize}
+    \clearpage
+
+	\textbf{Softwarelizenzen und Tools:}
+    \begin{itemize}
+        \item PostgreSQL: Kostenlos
+        \item Visual Studio Code: Kostenlos
+        \item Docker: Kostenlos
+        \item Filezilla: Kostenlos
+        \item Apache Airflow: Kostenlos
+        \item Business Central Lizenz (während der Implementierung): 65,50 €/Monat, über 2 Monate = 131 € 
+    \end{itemize}
+
+	\textbf{Hardware- und Infrastrukturkosten:}
+    \begin{itemize}
+        \item Serverkosten, Server vorhanden: 0€/Jahr
+    \end{itemize}
+        
+	\textbf{Gesamtkosten für die Implementierung: 971 €}
+
+\subsubsection{Laufende Betriebskosten}
+\label{Betriebskosten}
+
+Diese Kosten fallen während des Betriebs des Systems an.
+
+\textbf{Wartung, Fehlerbehebung und Optimierungen:}
+\begin{itemize}
+    \item Entwickler-Support (12 Stunden pro Jahr a 22€/Stunde) = 264 €/Jahr
+    \item Erweiterung des bestehenden Hetzner Servers 120 €/Jahr
+\end{itemize}
+
+\textbf{Gesamtkosten für den laufenden Betrieb: 384 €/Jahr }
+
+\clearpage
+
+\subsection{Vergleich: Manuelle vs. Automatisierte Prozesse}
+\label{vergleichProzesse}
+Tabelle~\ref{tab:vergleichProzesse}
+\tabelle{Vergleich von manuellen und automatisierten Prozessen}{tab:vergleichProzesse}{vergleichProzesse}\\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

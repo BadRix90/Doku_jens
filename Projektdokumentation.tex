@@ -1,0 +1,139 @@
+\documentclass[
+	ngerman,
+	toc=listof, % Abbildungsverzeichnis sowie Tabellenverzeichnis in das Inhaltsverzeichnis aufnehmen
+	toc=bibliography, % Literaturverzeichnis in das Inhaltsverzeichnis aufnehmen
+	footnotes=multiple, % Trennen von direkt aufeinander folgenden Fußnoten
+	parskip=half, % vertikalen Abstand zwischen Absätzen verwenden anstatt horizontale Einrückung von Folgeabsätzen
+	numbers=noendperiod % Den letzten Punkt nach einer Nummerierung entfernen (nach DIN 5008)
+]{scrartcl}
+\pdfminorversion=5 % erlaubt das Einfügen von pdf-Dateien bis Version 1.7, ohne eine Fehlermeldung zu werfen (keine Garantie für fehlerfreies Einbetten!)
+\usepackage[utf8]{inputenc} % muss als erstes eingebunden werden, da Meta/Packages ggfs. Sonderzeichen enthalten
+\usepackage[T1]{fontenc} % Wichtig für die Verwendung von T1-kodierten Schriftarten
+\usepackage{uarial} % Paket laden, das die Schriftart bereitstellt
+\renewcommand{\sfdefault}{ua1} % Setze die Standardschriftart auf Arial
+\renewcommand{\familydefault}{\sfdefault} % Setze die Standardschriftfamilie auf serifenlos (Arial)
+
+
+\input{Meta} % Metadaten zu diesem Dokument (Autor usw.)
+\input{Allgemein/Packages} % verwendete Packages
+% Sprachdefinition für JavaScript
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch,
+    switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstdefinelanguage{AL}
+{
+  sensitive=false,
+  morekeywords=[1]{
+    },
+  morekeywords=[2]{
+    },
+  morekeywords=[3]{
+    },
+  morekeywords=[4]{
+    },
+  morekeywords=[5]{
+    },
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]"
+}
+
+% Stil für AL-Code
+\lstset{
+    language=AL,
+    basicstyle=\small\ttfamily,
+    keywordstyle=[1]\color{blue}\bfseries,
+    keywordstyle=[2]\color{purple},
+    keywordstyle=[3]\color{green!60!black},
+    keywordstyle=[4]\color{green!60!black},
+    keywordstyle=[5]\color{orange},
+    commentstyle=\color{gray},
+    stringstyle=\color{orange},
+    breaklines=true,
+    numbers=left,
+    numberstyle=\small,
+    frame=tb,
+    columns=fullflexible,
+    showstringspaces=false,
+    tabsize=4,
+    backgroundcolor=\color{gray!10},
+    captionpos=b
+}
+\input{Allgemein/Seitenstil} % Definitionen zum Aussehen der Seiten
+\input{Allgemein/Befehle} % eigene allgemeine Befehle, die z.B. die Arbeit mit LaTeX erleichtern
+\input{Befehle} % eigene projektspezifische Befehle, z.B. Abkürzungen usw.
+
+\begin{document}
+% ---------------------------------------------------------------------------
+%\phantomsection
+%\thispagestyle{plain}
+%\pdfbookmark[1]{Eidesstattliche Erklärung}{ihkdeckblatt}
+%\includegraphicsKeepAspectRatio{DeckblattIHK.pdf}{1}
+%\cleardoublepage
+
+\phantomsection
+\thispagestyle{plain}
+\pdfbookmark[1]{Deckblatt}{deckblatt}
+\input{Deckblatt}
+\cleardoublepage
+
+% Preface --------------------------------------------------------------------
+\phantomsection
+\pagenumbering{Roman}
+\pdfbookmark[1]{Inhaltsverzeichnis}{inhalt}
+\tableofcontents
+
+\cleardoublepage
+
+\phantomsection
+\listoffigures
+\cleardoublepage
+
+\phantomsection
+\listoftables
+\cleardoublepage
+
+%\phantomsection
+%\lstlistoflistings
+%\cleardoublepage
+
+\newcommand{\abkvz}{Abkürzungsverzeichnis}
+\renewcommand{\nomname}{\abkvz}
+\section*{\abkvz}
+\markboth{\abkvz}{\abkvz}
+\addcontentsline{toc}{section}{\abkvz}
+\input{Abkuerzungen}
+\clearpage
+
+% Inhalt ---------------------------------------------------------------------
+\pagenumbering{arabic}
+\input{Inhalt.tex}
+
+% Literatur ------------------------------------------------------------------
+\clearpage
+\renewcommand{\refname}{Literaturverzeichnis}
+\bibliography{Bibliographie}
+\bibliographystyle{Allgemein/natdin} % DIN-Stil des Literaturverzeichnisses
+
+
+% Anhang ---------------------------------------------------------------------
+\clearpage
+\appendix
+\pagenumbering{roman}
+\input{Anhang}
+
+\end{document}
+
+

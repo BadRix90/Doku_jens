@@ -1,0 +1,74 @@
+% !TEX root = ../Projektdokumentation.tex
+\section{Einleitung}
+\label{sec:Einleitung}
+
+\subsection{Projektumfeld} 
+\label{sec:Projektumfeld}
+VONMÄHLEN ist ein deutsches Unternehmen, das sich auf die Entwicklung und Produktion von hochwertigen, 
+designorientierten Lifestyle-Technologieprodukten spezialisiert hat. Die Firma bietet innovative Zubehörlösungen für den täglichen Gebrauch, 
+insbesondere im Bereich Smartphone und Technik-Accessoires.
+
+\subsection{Projektziel} 
+\label{sec:Projektziel}
+Die SCM-Abteilung wünscht sich eine automatisierte Überwachung der Warensendungen, um den manuellen Aufwand und das Risiko menschlicher Fehler zu minimieren. Das System soll den Status aller Warensendungen automatisch und regelmäßig überprüfen und bei Abweichungen oder Verzögerungen eine E-Mail-Benachrichtigung an die zuständigen Mitarbeiter der SCM-Abteilung senden.
+Zusätzlich soll das System im ERP-System (Microsoft Business Central) den Zeitpunkt der Auslieferung einer Sendung erfassen und aktualisieren, damit ersichtlich ist, wann eine Lieferung erfolgreich zugestellt wurde. Diese Information dient als Grundlage dafür, dass die SCM-Abteilung die Buchung der zugehörigen Rechnung anstoßen kann, sobald die Lieferung den Empfänger erreicht hat. 
+Durch diese Automatisierung erwartet die SCM-Abteilung eine höhere Effizienz, da die Zustellvorgänge transparent und leicht nachvollziehbar sind und die Rechnungsstellung unmittelbar nach der Zustellung erfolgen kann.
+Eine detaillierte Auflistung der Anforderungen ist dem Lastenheft zu entnehmen. 
+Siehe \Anhang{app:Lastenheft}
+
+
+\subsection{Projektbegründung} 
+\label{sec:Projektbegruendung}
+Die größte Schwachstelle im aktuellen Prozess liegt im hohen manuellen Aufwand und der fehlenden Dokumentation. 
+Täglich werden alle offenen Lieferaufträge nach solchen mit einer Trackingnummer durchsucht, was als Indikator dient, 
+dass die Ware bereits auf dem Weg ist und überprüft werden muss. Dabei wird festgestellt, wie weit die Ware ist und ob 
+Verzögerungen oder Probleme vorliegen. Die Prüfung erfolgt durch Eingabe der Trackingnummer im Webportal des 
+Versanddienstleisters (z. B. DPD). Je nach Lieferstatus wird dann entsprechend gehandelt, und bei Auffälligkeiten 
+wird die zuständige Abteilung informiert. Dieser manuelle Prozess birgt jedoch das Risiko, dass Überprüfungen 
+ausgelassen oder ganze Aufträge übersehen werden. Auch kann es bei Personalmangel zum vollständigen Ausfall der 
+Prüfungen kommen. Aufgrund dieser Fehleranfälligkeit und des hohen Zeitaufwands hat sich die Firma VONMÄHLEN 
+entschieden, den Prozess zu automatisieren, um die Effizienz zu steigern und die Prozesssicherheit nachhaltig zu 
+gewährleisten.
+
+\subsection{Technische Projektschnittstellen} 
+\label{sec:Projektschnittstellen}
+Diese Schnittstellen gewährleisten eine reibungslose Interaktion zwischen den verschiedenen Systemen und Komponenten, 
+die für das Projekt erforderlich sind.
+
+\subsubsection{Versanddienstleister: Zeitfracht (ZF)}
+\begin{itemize}
+\item Art: SFTP-Schnittstelle
+\item Zweck: Bereitstellung von Trackingdaten
+\item Beschreibung: Der Versanddienstleister liefert täglich aktualisierte Tracking-Daten als CSV-Dateien über einen 
+gesicherten SFTP-Server. Diese Daten werden vom System heruntergeladen, validiert und verarbeitet.
+\end{itemize}
+
+\subsubsection{ERP-System: Microsoft Business Central}
+\begin{itemize}
+\item Art: API-Schnittstelle
+\item Zweck: Austausch von Informationen zu Sendungsstatus und Aktualisierungen von Lieferdaten
+\item Beschreibung: Die API ermöglicht es, Statusinformationen und Lieferdetails aus der 
+PostgreSQL-Datenbank in das ERP-System zu übertragen, um die automatisierte Weiterverarbeitung 
+(z.B. Rechnungsstellung) zu gewährleisten.
+\end{itemize}
+
+\subsubsection{Datenbank: PostgreSQL}
+\begin{itemize}
+\item Art: SQL-Schnittstelle
+\item Zweck: Speicherung und Abfrage der Tracking-Daten
+\item Beschreibung: Diese Schnittstellen gewährleisten eine reibungslose Interaktion zwischen den verschiedenen Systemen und Komponenten, die für das Projekt erforderlich sind.
+\end{itemize}
+
+\subsubsection{Workflow-Management-System: Apache Airflow}
+\begin{itemize}
+\item Art: Workflow-Orchestrierungs-Tool
+\item Zweck: Automatisierung und Orchestrierung von Prozessen
+\item Beschreibung: Apache Airflow steuert die zeitgesteuerte Verarbeitung der Trackingdaten, die Kommunikation mit der Datenbank und die Synchronisierung mit dem ERP-System.
+\end{itemize}
+
+\subsubsection{Docker-Container}
+\begin{itemize}
+\item Art: Container-Übergreifende Kommunikation
+\item Zweck: Isolierte Ausführung von PostgreSQL und Apache Airflow
+\item Beschreibung: Docker-Container werden genutzt, um PostgreSQL und Apache Airflow in einer sicheren und skalierbaren Umgebung auszuführen. Die Container sind so konfiguriert, dass sie miteinander kommunizieren können, um Daten auszutauschen. 
+\end{itemize}

@@ -1,0 +1,15 @@
+\label{bcTracking}
+\begin{tabular}{lrl} % 3 Spalten: linksbündig, rechtsbündig, linksbündig
+    \hline
+    \rowcolor{heading}\textbf{Spalte} & \textbf{Typ} & \textbf{Beschreibung} \\
+    \hline
+    id & BigSerial & Primärschlüssel, eindeutiger Identifikator \\
+    \rowcolor{odd}tracking\_no & VARCHAR & Eindeutige Sendungsnummer \\
+    last\_change & TIMESTAMP & Letzte Statusänderung \texttt{(Datum \& Uhrzeit)} \\
+    \rowcolor{odd}status\_code & VARCHAR & Aktueller Statuscode \\
+    status\_text & VARCHAR & Beschreibung des Statuscodes \\
+    \rowcolor{odd}source & VARCHAR & Datenquelle (z.B. ZF) \\
+    to\_bc & TIMESTAMP & Zeitpunkt der Übertragung an BC \\
+    \hline
+\end{tabular}
+    

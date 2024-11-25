@@ -14,7 +14,7 @@ Zum Testsystem gehören unter anderem:
 	\item Microsoft Dynamics 365 Business Central
 	\item PostgreSQL-Datenbank (siehe Anhang)
 	\item Apache Airflow für automatisierte Python-Skripte (siehe Anhang)
-	\item SFTP-Server für den Datentransfer
+	\item SFTP-Server für den Datentransfer \Anhang{app:DummyData}
 \end{itemize}
 
 \subsubsection{Tests mit dem Skript \textit{trackings.py}}
@@ -32,12 +32,6 @@ Die Tests bezogen sich hauptsächlich auf die folgenden Aspekte:
     \begin{itemize}
         \item Das Skript \textit{trackings.py} wurde verwendet, um die hochgeladenen Dummy-Daten vom SFTP-Server abzuholen und in die PostgreSQL-Datenbank zu speichern.
         \item Eine umfassende Validierung der Daten wurde durchgeführt, um sicherzustellen, dass nur vollständige und korrekte Datensätze verarbeitet werden.
-        \item Es wurden insbesondere folgende Validierungsszenarien getestet:
-        \begin{itemize}
-            \item Vollständige und korrekte Datensätze: Prüfung, ob die Daten korrekt in die Datenbank eingefügt werden.
-            \item Fehlerhafte oder unvollständige Datensätze: Sicherstellung, dass fehlerhafte Datensätze (z.B. fehlende Pflichtfelder, falsche Datentypen) nicht in die Datenbank übernommen werden, sondern eine entsprechende Fehlermeldung generieren.
-            \item Doppelte Datensätze: Dummy-Daten, die doppelt vorhanden waren, wurden hochgeladen, um sicherzustellen, dass das Skript diese erkennt und nicht erneut in die Datenbank einfügt.
-        \end{itemize}
     \end{itemize}
     \item Löschen der erfolgreich gelesenen Daten auf dem SFTP-Server
     \begin{itemize}
@@ -67,7 +61,6 @@ Die Testphase beinhaltete die folgenden Aspekte:
     \item Abfrage und Verarbeitung der Tracking-Daten
     \begin{itemize}
         \item Das Skript \textit{bc\_db.py} wurde getestet, um sicherzustellen, dass es in der Lage ist, die Tracking-Daten korrekt aus der PostgreSQL-Datenbank zu lesen und zu verarbeiten.
-        \item Es wurden mehrere Testläufe durchgeführt, um sicherzustellen, dass das Skript die relevanten Daten korrekt abfragt und für die Weiterverarbeitung vorbereitet.
         \item Verarbeitungsszenarien: Verschiedene Szenarien, wie z.B. Datensätze mit unterschiedlichen Statuscodes, wurden geprüft, um sicherzustellen, dass das System die jeweilige Geschäftslogik korrekt anwendet.
     \end{itemize}
     \item Synchronisation mit Microsoft Business Central
@@ -75,19 +68,11 @@ Die Testphase beinhaltete die folgenden Aspekte:
         \item Ein wesentlicher Bestandteil des Skripts ist die Synchronisation der Tracking-Daten mit dem ERP-System Microsoft Business Central.
         \item Die Funktionalität wurde getestet, indem die API-Aufrufe mit verschiedenen Testdaten ausgeführt wurden.
         \item Es wurde insbesondere geprüft, dass die Statusinformationen korrekt in Business Central aktualisiert werden und dass die API fehlerfrei funktioniert.
-        \item Hierzu wurden auch absichtlich falsche API-Daten verwendet, um sicherzustellen, dass das System korrekt auf Fehlermeldungen reagiert und diese verarbeitet.
     \end{itemize}
     \item Fehlerbehandlung und Benachrichtigung
     \begin{itemize}
         \item Das Skript wurde getestet, um sicherzustellen, dass es robust gegenüber Fehlern ist, die bei der Verarbeitung der Daten auftreten können.
-        \item Es wurden Szenarien simuliert, in denen die API-Verbindung fehlschlägt, um zu prüfen, wie das Skript darauf reagiert.
         \item Zudem wurde die Benachrichtigungslogik getestet: Wenn eine Sendung länger als die definierte Anzahl an Tagen in einem bestimmten Status verweilt, wird automatisch eine Benachrichtigung an die zuständigen Mitarbeiter gesendet.
-        \item Die Testläufe stellten sicher, dass diese E-Mails korrekt ausgelöst werden.
-    \end{itemize}
-    \item Korrekte Handhabung von Ausnahmefällen
-    \begin{itemize}
-        \item Es wurden Tests durchgeführt, um sicherzustellen, dass alle möglichen Ausnahmefälle korrekt behandelt werden, z.B. wenn die Datenbankverbindung vorübergehend nicht verfügbar ist oder unerwartete Datenformate auf der API-Ebene auftreten.
-        \item Die Protokollierung der Fehler wurde ebenfalls geprüft, um sicherzustellen, dass alle Fehler im Log korrekt vermerkt werden, damit diese bei Bedarf nachvollzogen und behoben werden können.
     \end{itemize}
     \item End-to-End-Test der gesamten Datenpipeline
     \begin{itemize}

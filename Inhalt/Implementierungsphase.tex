@@ -12,18 +12,6 @@ Die Datenbank speichert Tracking-Informationen von Zeitfracht und BC.
 Tabelle~\ref{tab:bcTracking} Die Struktur der Tabelle \textit{bc\_tracking} ist wie folgt:
 \tabelle{\textit{bc\_tracking}}{tab:bcTracking}{bcTracking}\\
 
-\clearpage
-
-Die Tabelle wurde mit dem folgenden SQL-Skript erstellt:
-
-\begin{figure}[htb]
-    \centering
-    \includegraphicsKeepAspectRatio{sql_create_db.png}{0.8}
-    \caption{Skript zur Erstellung der Datenbank}
-    \label{fig:DatenbankBCTracking}
-\end{figure}
-
-
 
 \subsection{Deployment auf dem Hetzner-Server}
 \label{sec:Hetzner-Server}
@@ -35,7 +23,7 @@ lokale als auch entfernte Datenbankverbindungen unterstützt.
 \subsection{Testdaten und Verifizierung des Datenbankzugriffs}
 \label{sec:VerifizierungTestdaten}
 
-Um die korrekte Funktion der Datenbank und der Anwendungen zu verifizieren, wurden Test-daten verwendet. 
+Um die korrekte Funktion der Datenbank und der Anwendungen zu verifizieren, wurden Testdaten verwendet. 
 Diese Testdaten wurden in die Tabelle \textit{bc\_tracking} eingefügt und die Anwendungen darauf ausgeführt, 
 um sicherzustellen, dass die Daten korrekt verarbeitet und die gewünschten Aktionen, wie das Senden von E-Mails, 
 ausgeführt werden. Screenshots der Anwendung in der Entwicklungsphase mit Dummy-Daten befinden sich im Anhang A3 Abbildung 7

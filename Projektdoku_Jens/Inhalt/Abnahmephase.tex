@@ -1,0 +1,83 @@
+% !TEX root = ../Projektdokumentation.tex
+\section{Abnahmephase}
+\label{sec:Abnahmephase}
+
+\subsection{Testphase}
+\label{sec:Testphase}
+Alle Systeme wurden unter realistischen Bedingungen in einer speziell dafür eingerichteten Entwicklungsumgebung getestet.
+Diese Umgebung, die regelmäßig für Integration-Tests genutzt wird, stellt sicher, dass die Systeme stabil und
+zuverlässig funktionieren.
+
+Zum Testsystem gehören unter anderem:
+
+\begin{itemize}
+	\item Microsoft Dynamics 365 Business Central
+	\item PostgreSQL-Datenbank \Anhang{app:PostgreSQL}
+	\item Apache Airflow für automatisierte Python-Skripte \Anhang{app:Airflow}
+	\item SFTP-Server für den Datentransfer, siehe \Anhang{app:DummyData}
+\end{itemize}
+
+\subsubsection{Tests mit dem Skript \textit{trackings.py}}
+\label{sec:Tests mit dem Skript trackings.py}
+
+Die Tests bezogen sich hauptsächlich auf die folgenden Aspekte:
+
+\begin{enumerate}
+    \item Upload von Dummy-Daten auf den SFTP-Server
+    \begin{itemize}
+        \item Im Rahmen der Tests wurden regelmäßig Dummy-Daten auf den SFTP-Server geladen, um den vollständigen Prozess von der Datenerfassung bis zur Weiterverarbeitung zu simulieren.
+        \item Diese Dummy-Daten bestanden aus korrekt formatierten Tracking-Datensätzen sowie absichtlich fehlerhaften Datensätzen, um die Robustheit der Validierungslogik zu prüfen.
+    \end{itemize}
+    \item Abholung und Validierung der Daten durch das Skript
+    \begin{itemize}
+        \item Das Skript \textit{trackings.py} wurde verwendet, um die hochgeladenen Dummy-Daten vom SFTP-Server abzuholen und in die PostgreSQL-Datenbank zu speichern.
+        \item Eine umfassende Validierung der Daten wurde durchgeführt, um sicherzustellen, dass nur vollständige und korrekte Datensätze verarbeitet werden.
+    \end{itemize}
+    \item Löschen der erfolgreich gelesenen Daten auf dem SFTP-Server
+    \begin{itemize}
+        \item Nach der erfolgreichen Verarbeitung der Dummy-Daten wurde das automatische Löschen der verarbeiteten Dateien auf dem SFTP-Server getestet.
+        \item Es wurde sichergestellt, dass nur die Daten, die erfolgreich verarbeitet wurden, gelöscht wurden, während nicht verarbeitete oder fehlerhafte Dateien weiterhin auf dem SFTP-Server verbleiben.
+        \item Das Skript wurde darauf getestet, korrekt zwischen verarbeiteten und nicht verarbeiteten Dateien zu unterscheiden und die Löschvorgänge nur bei Erfolg auszuführen.
+    \end{itemize}
+    \item Fehlerhafte Daten gezielt einfügen
+    \begin{itemize}
+        \item Es wurden gezielt falsche Daten auf den SFTP-Server hochgeladen, um zu prüfen, wie die Skripte auf inkonsistente Informationen reagieren.
+        \item Ziel dieser Tests war es, sicherzustellen, dass das System solche fehlerhaften Daten erkennt und entsprechend darauf reagiert, z.B. durch Protokollierung im Log oder durch Benachrichtigung der zuständigen Personen.
+    \end{itemize}
+    \item Verifizierung der Datenintegrität
+    \begin{itemize}
+        \item Die Testdaten wurden genutzt, um die Datenintegrität in der PostgreSQL-Datenbank zu überprüfen.
+        \item Es wurde sichergestellt, dass nur die validierten Daten korrekt in der Datenbank gespeichert wurden und dass keine fehlerhaften Daten Einfluss auf die vorhandenen Datensätze hatten.
+        \item Dies beinhaltete auch die Konsistenzprüfung der Datenbank nach der Verarbeitung.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Tests mit dem Skript \textit{bc\_db.py}}
+\label{sec:Tests mit dem Skript bc_db.py}
+
+Die Testphase beinhaltete die folgenden Aspekte:
+
+\begin{enumerate}
+    \item Abfrage und Verarbeitung der Tracking-Daten
+    \begin{itemize}
+        \item Das Skript \textit{bc\_db.py} wurde getestet, um sicherzustellen, dass es in der Lage ist, die Tracking-Daten korrekt aus der PostgreSQL-Datenbank zu lesen und zu verarbeiten.
+        \item Verarbeitungsszenarien: Verschiedene Szenarien, wie z.B. Datensätze mit unterschiedlichen Statuscodes, wurden geprüft, um sicherzustellen, dass das System die jeweilige Geschäftslogik korrekt anwendet.
+    \end{itemize}
+    \item Synchronisation mit Microsoft Business Central
+    \begin{itemize}
+        \item Ein wesentlicher Bestandteil des Skripts ist die Synchronisation der Tracking-Daten mit dem ERP-System Microsoft Business Central.
+        \item Die Funktionalität wurde getestet, indem die API-Aufrufe mit verschiedenen Testdaten ausgeführt wurden.
+        \item Es wurde insbesondere geprüft, dass die Statusinformationen korrekt in Business Central aktualisiert werden und dass die API fehlerfrei funktioniert.
+    \end{itemize}
+    \item Fehlerbehandlung und Benachrichtigung
+    \begin{itemize}
+        \item Das Skript wurde getestet, um sicherzustellen, dass es robust gegenüber Fehlern ist, die bei der Verarbeitung der Daten auftreten können.
+        \item Zudem wurde die Benachrichtigungslogik getestet: Wenn eine Sendung länger als die definierte Anzahl an Tagen in einem bestimmten Status verweilt, wird automatisch eine Benachrichtigung an die zuständigen Mitarbeiter gesendet.
+    \end{itemize}
+    \item End-to-End-Test der gesamten Datenpipeline
+    \begin{itemize}
+        \item Schließlich wurde ein End-to-End-Test der gesamten Datenpipeline durchgeführt, bei dem beide Skripte (\textit{trackings.py} und \textit{bc\_db.py}) zusammenarbeiteten.
+        \item Ziel war es sicherzustellen, dass die Daten von der Erfassung über den SFTP-Server, die Validierung und Speicherung in der PostgreSQL-Datenbank bis hin zur Synchronisation mit Business Central nahtlos verarbeitet werden.
+        \item Diese Tests beinhalteten auch die Simulation realer Arbeitsbedingungen, um die Performance und Zuverlässigkeit des Systems unter hoher Last zu prüfen.
+    \end{itemize}
+\end{enumerate}
